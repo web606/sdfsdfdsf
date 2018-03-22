@@ -1,0 +1,6 @@
+.row-item {
+  position: relative;
+  display: flex;
+  // align-items: center;
+  background-color: #fff;
+}
