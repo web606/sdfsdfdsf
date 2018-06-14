@@ -1,36 +1,138 @@
-  // align-items: center;
-1
+<!--
+*
+* @author        : zhangwen
+* @namespace     : textRowInput
+* @description   : 右边带有中文字体的input 或者 select
+* @time          : 2018-1-22 15:00
+* @
+*
+-->
+<template>
+  <div class="c-text-input" :class="[ {'is-border': isBorder} ]">
+    <div class="prepend" v-if="prepend" tabindex="0">
+      <span>{{prepend}}</span>
+    </div>
+    <div class="container">
 
+      <label for="input" class="row-label">
+        <input class="text-input" :value="currentValue" :disabled="disabled" :placeholder="placeholder" :maxLength="maxLength" @blur="OnChangeCallBack">
+      </label>
+      <span class="append" v-if="append">
+        {{append}}
+      </span>
 
+      <!-- <template v-if="type === 'select'">
+        <div class="row-input icon-arrow-right">
+          <select name="row-select" id="row-select" class="row-select" :value="currentValue" @change="OnChangeCallBack">
+            <option value="00">请选择</option>
+            <option v-for='(item,key) in options' :value='item.value'>{{item.title}}</option>
+          </select>
+        </div>
+      </template> -->
+    </div>
+  </div>
+</template>
 
-1
-1
-1
-1
-1
-1
+<script>
+  import VAL from '@/utils/wx/validate'
 
-11
-1
-1
-1
-2
-2
+  export default {
+    name: 'TextRowInput',
+    methods: {
 
-2
-22
-22
-2
-2
-2
-2
-2
-2
-2
+      // input 回调函数
+      OnChangeCallBack ($event) {
+        this.$emit('CallBack', this.tempName, VAL.trimStr($event.target.value), this.name)
+      }
+      // // select 回调函数
+      // OnSelectCallBack ($event) {
+      //   this.$emit('CallBack', this.tempName, $event.target.value)
+      // }
+    },
+    props: {
+      // 是否显示下划线
+      isBorder: {
+        type: Boolean,
+        default: true
+      },
+      // 是否禁用
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      // input || select
+      // type: {
+      //   type: String,
+      //   default: 'input'
+      // },
+      // 类似 label
+      prepend: String,
+      // 后面的文字
+      append: String,
+      // value 值
+      currentValue: String,
+      placeholder: String,
+      maxLength: [String, Number],
+      // key值
+      tempName: String,
+      options: [Object, Array],
+      name: String
+    }
+  }
+</script>
 
-22
+<style  lang='scss' >
+  .c-text-input {
+    display: flex;
+    // flex-flow:row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    font-size: rem-calc(15);
+    padding: rem-calc(11) rem-calc(11) rem-calc(11) 0;
+    margin-left: rem-calc(15);
+    color: #333;
 
-2
-2
-let aa = asd
-let aa = 'bb' 
+    .prepend {
+      flex: 0 1 30%;
+      white-space: nowrap;
+    }
+    .container {
+      flex: 1;
+      display: flex;
+      line-height: 1.3;
+      padding-right: rem-calc(11);
+    }
+    .row-input {
+      flex: 1;
+    }
+    .text-input {
+      text-align: right;
+      line-height: 1.3;
+      width: 93%;
+    }
+    .icon-arrow-right {
+      background-size: auto 75%;
+    }
+    .row-select {
+      width: 80%;
+      direction: rtl;
+      vertical-align: text-bottom;
+      line-height: 1.3;
+      padding-right: rem-calc(15);
+      option {
+        direction: ltr;
+      }
+    }
+    .row-label,
+    .row-select {
+      flex: 1;
+    }
+  }
+  .c-text-input::before {
+    display: table;
+    content: '';
+  }
+  .is-border {
+    border-bottom: 1px solid #e1e1e1;
+  }
+</style>
