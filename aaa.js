@@ -78,5 +78,5 @@
       options: [Object, Array],
       name: String
     }
-  }
+  }sadasdasdadsda
 </script>
